@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate, getPublishedPosts, groupByYear } from '../lib/posts';
+import { withBase } from '../lib/url';
+
+const posts = await getPublishedPosts();
+const groups = groupByYear(posts);
+---
+
+<BaseLayout title="归档">
+  <h1 class="page-title">归档</h1>
+  {
+    groups.map(({ year, posts: list }) => (
+      <section class="archive-year">
+        <h2>{year} 年</h2>
+        <ul class="archive-list">
+          {list.map((post) => (
+            <li>
+              <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+              <a href={withBase(`/posts/${post.id}/`)}>{post.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+  {groups.length === 0 && <p class="empty">还没有文章。</p>}
+</BaseLayout>

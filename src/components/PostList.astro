@@ -1,0 +1,42 @@
+---
+import type { Post } from '../lib/posts';
+import { formatDate } from '../lib/posts';
+import { withBase } from '../lib/url';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+  posts.length === 0 ? (
+    <p class="empty">还没有文章。写一篇试试：新建 <code>src/content/posts/文章名/index.md</code> 即可。</p>
+  ) : (
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li>
+          <article class="post-item">
+            <h2>
+              <a href={withBase(`/posts/${post.id}/`)}>{post.data.title}</a>
+            </h2>
+            <div class="post-meta">
+              <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+              {post.data.tags.length > 0 && (
+                <span class="tags">
+                  {post.data.tags.map((tag) => (
+                    <a class="tag" href={withBase(`/tags/${tag}/`)}>
+                      #{tag}
+                    </a>
+                  ))}
+                </span>
+              )}
+            </div>
+            {post.data.description && <p class="post-desc">{post.data.description}</p>}
+          </article>
+        </li>
+      ))}
+    </ul>
+  )
+}
