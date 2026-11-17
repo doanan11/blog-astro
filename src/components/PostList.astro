@@ -34,6 +34,9 @@ const { posts } = Astro.props;
               )}
             </div>
             {post.data.description && <p class="post-desc">{post.data.description}</p>}
+            <a class="read-more" href={withBase(`/posts/${post.id}/`)} aria-hidden="true" tabindex="-1">
+              阅读全文 <span>→</span>
+            </a>
           </article>
         </li>
       ))}
