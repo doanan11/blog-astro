@@ -36,6 +36,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body>
+    <div class="progress" data-progress aria-hidden="true"></div>
     <header class="site-header">
       <div class="wrap">
         <a class="brand" href={withBase('/')}>{SITE_TITLE}</a>
@@ -51,5 +52,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <span>由 Astro 构建 · GitHub Pages 托管</span>
       </div>
     </footer>
+    <script>
+      const bar = document.querySelector<HTMLElement>('[data-progress]');
+      if (bar && document.querySelector('.post')) {
+        bar.classList.add('is-visible');
+        const update = () => {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          const ratio = max > 0 ? window.scrollY / max : 0;
+          bar.style.width = `${Math.min(Math.max(ratio, 0), 1) * 100}%`;
+        };
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+      }
+    </script>
   </body>
 </html>
