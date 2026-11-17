@@ -11,7 +11,8 @@ interface Props {
 }
 
 const { post, prev, next } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
@@ -33,6 +34,21 @@ const { Content } = await render(post);
         }
       </div>
     </header>
+
+    {
+      toc.length > 1 && (
+        <nav class="toc" aria-label="目录">
+          <p class="toc-title">目录</p>
+          <ol>
+            {toc.map((h) => (
+              <li class:list={[`depth-${h.depth}`]}>
+                <a href={`#${h.slug}`}>{h.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
 
     <div class="prose">
       <Content />
