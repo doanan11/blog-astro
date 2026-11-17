@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts, formatDate } from '../lib/posts';
+import { withBase } from '../lib/url';
+
+const posts = await getPublishedPosts();
+const years = Array.from(new Set(posts.map((post) => post.data.date.slice(0, 4)))).sort((a, b) =>
+  b.localeCompare(a)
+);
+const latest = posts[0];
+let index = 0;
+---
+
+<BaseLayout title="目录" description={`全部文章目录，共 ${posts.length} 篇`}>
+  <header class="catalog-head">
+    <h1 class="page-title">目录</h1>
+    <p class="catalog-meta">
+      共 <strong>{posts.length}</strong> 篇
+      {latest && <span>· 最近更新 {formatDate(latest.data.date)}</span>}
+    </p>
+  </header>
+
+  {
+    posts.length === 0 ? (
+      <p class="empty">还没有文章。</p>
+    ) : (
+      years.map((year) => (
+        <section class="chapter">
+          <p class="chapter-label">{year}</p>
+          <ol class="book-toc">
+            {posts
+              .filter((post) => post.data.date.startsWith(year))
+              .map((post) => {
+                index += 1;
+                return (
+                  <li>
+                    <a href={withBase(`/posts/${post.id}/`)}>
+                      <span class="toc-num">{String(index).padStart(2, '0')}</span>
+                      <span class="toc-title">{post.data.title}</span>
+                      <span class="toc-leader" aria-hidden="true" />
+                      <time class="toc-date" datetime={post.data.date}>
+                        {formatDate(post.data.date)}
+                      </time>
+                    </a>
+                    {post.data.description && <p class="toc-desc">{post.data.description}</p>}
+                  </li>
+                );
+              })}
+          </ol>
+        </section>
+      ))
+    )
+  }
+</BaseLayout>

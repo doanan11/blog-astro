@@ -766,6 +766,103 @@ html[data-theme='dark'] .astro-code span {
   text-decoration-color: var(--accent-strong);
 }
 
+/* ============ 目录（书本式） ============ */
+.catalog-head {
+  margin-bottom: 10px;
+}
+
+.catalog-meta {
+  margin: 8px 0 0;
+  color: var(--fg-soft);
+  font-size: 0.9rem;
+}
+
+.catalog-meta strong {
+  color: var(--accent-strong);
+  font-size: 1.12rem;
+}
+
+.chapter {
+  margin-top: 30px;
+}
+
+.chapter-label {
+  display: inline-block;
+  margin: 0 0 4px;
+  padding: 2px 13px;
+  border-radius: 999px;
+  background: var(--accent-strong);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.book-toc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.book-toc li {
+  padding: 12px 8px;
+  border-bottom: 1px dashed var(--border);
+  border-radius: 8px;
+  transition: background-color 0.18s ease;
+}
+
+.book-toc li:hover {
+  background: var(--link-bg);
+}
+
+.book-toc a {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: var(--fg);
+}
+
+.toc-num {
+  min-width: 2.2ch;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.toc-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.book-toc a:hover .toc-title {
+  color: var(--accent-strong);
+}
+
+.toc-leader {
+  flex: 1;
+  min-width: 24px;
+  border-bottom: 1.5px dotted color-mix(in srgb, var(--accent) 60%, transparent);
+  transform: translateY(-4px);
+}
+
+.toc-date {
+  color: var(--fg-soft);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.toc-desc {
+  margin: 6px 0 0;
+  padding-left: calc(2.2ch + 12px);
+  color: var(--fg-soft);
+  font-size: 0.87rem;
+  line-height: 1.7;
+}
+
 /* ============ 标签云 ============ */
 .tag-cloud {
   display: flex;
@@ -867,6 +964,14 @@ html[data-theme='dark'] .astro-code span {
 
   .toc {
     padding: 14px 16px;
+  }
+
+  .book-toc a {
+    gap: 8px;
+  }
+
+  .toc-desc {
+    padding-left: 0;
   }
 }
 
