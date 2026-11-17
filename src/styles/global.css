@@ -863,6 +863,33 @@ html[data-theme='dark'] .astro-code span {
   line-height: 1.7;
 }
 
+/* ============ 原稿展示 ============ */
+.manuscript {
+  white-space: pre-line;
+  margin: 12px 0;
+  padding: 16px 20px;
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: var(--link-bg);
+  font-size: 0.97rem;
+  line-height: 2.05;
+  color: var(--fg);
+}
+
+.post-body details {
+  margin: 14px 0;
+}
+
+.post-body summary {
+  cursor: pointer;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.post-body details[open] summary {
+  margin-bottom: 10px;
+}
+
 /* ============ 标签云 ============ */
 .tag-cloud {
   display: flex;
